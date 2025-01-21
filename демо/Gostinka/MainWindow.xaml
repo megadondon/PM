@@ -7,18 +7,30 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="0.1*" />
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.3*" />
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="1.1*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock Text="Укажите период с " Margin="5"/>
             <ComboBox x:Name="startDate" Margin="5"/>
             <TextBlock Text="по" Margin="5"/>
             <ComboBox x:Name="endDate" Margin="5"/>
-            <Button x:Name="filterButton" Content=""/>
-            <Button x:Name="showAllButton" Content=""/>
+            <Button x:Name="filterButton" Content="Фильтровать"/>
+            <Button x:Name="showAllButton" Content="Показать все"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <Calendar/>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Создать" x:Name="makeButton" Padding="5"/>
+                <Button Content="Удалить" x:Name="deleteButton" Padding="5"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>
