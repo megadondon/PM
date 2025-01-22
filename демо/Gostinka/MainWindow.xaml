@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gostinka"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Работа с бронированием номеров" MinHeight="500" MinWidth="500">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.1*" />
@@ -32,5 +32,16 @@
                 <Button Content="Удалить" x:Name="deleteButton" Padding="5"/>
             </StackPanel>
         </StackPanel>
+        <ListView x:Name="roomsList" Grid.Row="2" Grid.Column="1">
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn DisplayMemberBinding="{Binding IdBooking}" Header="Номер бронирования"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding ArrivalDate}" Header="Дата заезда"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Room.Category.CategoryName}" Header="Категория размещения"/>
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>
