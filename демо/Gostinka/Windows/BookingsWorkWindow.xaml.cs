@@ -14,6 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Gostinka.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+using Pomelo.EntityFrameworkCore.MySql.Query.ExpressionTranslators.Internal;
+using System.Reflection.Metadata;
 
 namespace Gostinka.Windows
 {
@@ -37,6 +40,25 @@ namespace Gostinka.Windows
             if (bookings.Count > 0)
             {
                 bookingsList.ItemsSource = bookings;
+            }
+        }
+
+        private void startDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DatePicker date = sender as DatePicker;
+
+            if (date.SelectedDate <= DateTime.Now)
+            {
+                MessageBox.Show("Нельзя выбрать прошлую дату");
+                date.SelectedDate = DateTime.Now;
+            }
+        }
+
+        private void filterButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (startDate != null & endDate != null)
+            {
+                // доделать
             }
         }
     }
