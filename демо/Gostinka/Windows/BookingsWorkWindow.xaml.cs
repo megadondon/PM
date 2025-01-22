@@ -26,39 +26,45 @@ namespace Gostinka.Windows
     public partial class BookingsWorkWindow : Window
     {
         GostinkaContext context;
+        List<Booking> bookings;
+
         public BookingsWorkWindow()
         {
             InitializeComponent();
 
             context = new GostinkaContext();
 
-            List<Booking> bookings = context.Bookings
+            bookings = context.Bookings
                 .Include(r => r.Room)
                 .ThenInclude(c => c.Category)
                 .AsNoTracking()
                 .ToList();
+
             if (bookings.Count > 0)
             {
                 bookingsList.ItemsSource = bookings;
             }
         }
 
-        private void startDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            DatePicker date = sender as DatePicker;
+        //private void startDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    DatePicker date = sender as DatePicker;
 
-            if (date.SelectedDate <= DateTime.Now)
-            {
-                MessageBox.Show("Нельзя выбрать прошлую дату");
-                date.SelectedDate = DateTime.Now;
-            }
-        }
+        //    if (date.SelectedDate <= DateTime.Now)
+        //    {
+        //        MessageBox.Show("Нельзя выбрать прошлую дату");
+        //        date.SelectedDate = DateTime.Now;
+        //    }
+        //}
 
         private void filterButton_Click(object sender, RoutedEventArgs e)
         {
             if (startDate != null & endDate != null)
             {
-                // доделать
+                foreach (Booking booking in bookings)
+                {
+                    // выбрать брони в определенный период 
+                }
             }
         }
     }
