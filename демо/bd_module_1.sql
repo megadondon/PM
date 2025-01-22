@@ -1,32 +1,9 @@
 create database gostinka;
 use gostinka;
 
-create table passports(
-	IdPassport int auto_increment primary key,
-    Serial varchar(4),
-    Number varchar(6),
-    Address varchar(100),
-    WhoIssue varchar(100),
-    IssueDate date
-);
-
 create table statuses(
 	IdStatus int auto_increment primary key,
     StatusName varchar(30)
-);
-
-create table users(
-	IdUser int auto_increment primary key,
-    Firstname varchar(50),
-    Lastname varchar(50),
-    Patronymic varchar(50),
-    DateOfBirth date,
-    PassportId int, foreign key(PassportId) references passports(IdPassport),
-    Phone varchar(15),
-    Email varchar(256),
-    Username varchar(50),
-    Password varchar(50),
-	Role enum("Руководитель", "Администратор", 'Клиент', "Сотрудник", "Гость")
 );
 
 create table categories(
@@ -36,12 +13,31 @@ create table categories(
     Description tinytext
 );
 
+create table users(
+	IdUser int auto_increment primary key,
+    Firstname varchar(50),
+    Lastname varchar(50),
+    Patronymic varchar(50),
+    DateOfBirth date,
+    Phone varchar(15),
+    Email varchar(256),
+    Username varchar(50),
+    Password varchar(50),
+	Role enum("Руководитель", "Администратор", 'Клиент', "Сотрудник", "Гость")
+);
+
 create table rooms(
 	IdRoom int auto_increment primary key,
     RoomNumber int,
     CategoryId int, foreign key (CategoryId) references categories(IdCategory),
-    Floor int,
-    StatusId int, foreign key(StatusId) references statuses(IdStatus)
+    Floor int
+);
+
+create table rooms_statuses(
+	IdRoomStatus int primary key auto_increment,
+	RoomId int, foreign key(RoomId) references rooms(IdRoom),
+    StatusId int, foreign key(StatusId) references statuses(IdStatus),
+    StatusDate date
 );
 
 create table services(
@@ -62,13 +58,14 @@ create table bookings(
 );
 
 create table bookings_services(
-	ServiceId int primary key, foreign key(ServiceId) references services(IdService),
-    BookingId int primary key, foreign key(BookingId) references bookings(IdBooking)
+	ServiceId int, foreign key(ServiceId) references services(IdService),
+    BookingId int, foreign key(BookingId) references bookings(IdBooking),
+    primary key (ServiceId, BookingId)
 );
 
 create table cleaning_schedule(
 	IdCleaning int auto_increment primary key,
 	CleaningDate date,
-    Floor int,
-    CleanerId int, foreign key(CleanerId) references users(IdUser)
+    CleanerId int, foreign key(CleanerId) references users(IdUser),
+    Floor int
 );
