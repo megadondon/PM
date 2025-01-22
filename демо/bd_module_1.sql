@@ -62,8 +62,8 @@ create table bookings(
 );
 
 create table bookings_services(
-	ServiceId int, foreign key(ServiceId) references services(IdService),
-    BookingId int, foreign key(BookingId) references bookings(IdBooking)
+	ServiceId int primary key, foreign key(ServiceId) references services(IdService),
+    BookingId int primary key, foreign key(BookingId) references bookings(IdBooking)
 );
 
 create table cleaning_schedule(
