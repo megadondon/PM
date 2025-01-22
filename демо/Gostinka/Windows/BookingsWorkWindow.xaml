@@ -33,7 +33,7 @@
                 <Button Content="Удалить" x:Name="deleteButton" Padding="5"/>
             </StackPanel>
         </StackPanel>
-        <ListView x:Name="roomsList" Grid.Row="2" Grid.Column="1">
+        <ListView x:Name="bookingsList" Grid.Row="2" Grid.Column="1">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
