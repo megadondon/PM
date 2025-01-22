@@ -1,11 +1,12 @@
-﻿<Window x:Class="Gostinka.MainWindow"
+﻿<Window x:Class="Gostinka.Windows.BookingsWorkWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Gostinka"
+        xmlns:local="clr-namespace:Gostinka.Windows"
         mc:Ignorable="d"
-        Title="Работа с бронированием номеров" MinHeight="500" MinWidth="500">
+        Title="Работа с бронированием номеров" MinHeight="500" MinWidth="500"
+        Height="500" Width="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.1*" />
