@@ -10,9 +10,15 @@
     <Compile Update="Windows\BookingsWorkWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Windows\BookingWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Windows\BookingsWorkWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\BookingWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
