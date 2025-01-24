@@ -61,10 +61,43 @@ namespace Gostinka.Windows
         {
             if (startDate != null & endDate != null)
             {
+                DateTime? start = startDate.SelectedDate;
+                DateTime? end = endDate.SelectedDate;
+
+                List<Booking> filteredBookingList = new List<Booking>();
+
                 foreach (Booking booking in bookings)
                 {
-                    // выбрать брони в определенный период 
+                    DateTime arrivalDate = booking.ArrivalDate.Value.ToDateTime(new TimeOnly());
+
+                    // выбрать брони в определенный период
+                    if (arrivalDate >= start & arrivalDate <= end)
+                    {
+                        filteredBookingList.Add(booking);
+                    }
                 }
+
+                if (filteredBookingList.Count > 0) {
+                    MessageBox.Show($"Найдено {filteredBookingList.Count} совпадений", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Не обнаружено совпадений", "Провал", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+
+                bookingsList.ItemsSource = filteredBookingList;
+            }
+        }
+
+        private void startDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (startDate != null && endDate != null)
+            {
+                if (endDate.SelectedDate < startDate.SelectedDate)
+                {
+                    MessageBox.Show("Указан недостижимый период.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    endDate.SelectedDate = startDate.SelectedDate;
+                }   
             }
         }
     }
