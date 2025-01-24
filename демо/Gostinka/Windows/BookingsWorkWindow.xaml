@@ -24,7 +24,7 @@
             <TextBlock Text="по" Margin="5"/>
             <DatePicker x:Name="endDate" Margin="5" SelectedDateChanged="startDate_SelectedDateChanged"/>
             <Button x:Name="filterButton" Content="Фильтровать" Click="filterButton_Click"/>
-            <Button x:Name="showAllButton" Content="Показать все"/>
+            <Button x:Name="showAllButton" Content="Показать все" Click="showAllButton_Click"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1">
             <StackPanel Orientation="Horizontal">

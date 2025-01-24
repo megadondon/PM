@@ -79,13 +79,13 @@ namespace Gostinka.Windows
 
                 if (filteredBookingList.Count > 0) {
                     MessageBox.Show($"Найдено {filteredBookingList.Count} совпадений", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
+                    bookingsList.ItemsSource = filteredBookingList;
                 }
                 else
                 {
                     MessageBox.Show("Не обнаружено совпадений", "Провал", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
 
-                bookingsList.ItemsSource = filteredBookingList;
             }
         }
 
@@ -99,6 +99,11 @@ namespace Gostinka.Windows
                     endDate.SelectedDate = startDate.SelectedDate;
                 }   
             }
+        }
+
+        private void showAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            bookingsList.ItemsSource = bookings;
         }
     }
 }
