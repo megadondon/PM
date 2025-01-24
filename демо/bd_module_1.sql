@@ -18,11 +18,6 @@ create table users(
     Firstname varchar(50),
     Lastname varchar(50),
     Patronymic varchar(50),
-    DateOfBirth date,
-    Phone varchar(15),
-    Email varchar(256),
-    Username varchar(50),
-    Password varchar(50),
 	Role enum("Руководитель", "Администратор", 'Клиент', "Сотрудник", "Гость")
 );
 
@@ -58,9 +53,10 @@ create table bookings(
 );
 
 create table bookings_services(
+	IdBookingService int auto_increment primary key,
 	ServiceId int, foreign key(ServiceId) references services(IdService),
     BookingId int, foreign key(BookingId) references bookings(IdBooking),
-    primary key (ServiceId, BookingId)
+    CountHour int default(1)
 );
 
 create table cleaning_schedule(
