@@ -79,5 +79,10 @@ namespace Gostinka.Windows
         {
             bookingsList.ItemsSource = bookings;
         }
+
+        private void makeButton_Click(object sender, RoutedEventArgs e)
+        {
+            new BookingWindow().Show();
+        }
     }
 }

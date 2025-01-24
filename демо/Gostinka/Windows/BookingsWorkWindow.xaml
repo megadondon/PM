@@ -28,7 +28,7 @@
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1">
             <StackPanel Orientation="Horizontal">
-                <Button Content="Создать" x:Name="makeButton" Padding="5"/>
+                <Button Content="Создать" x:Name="makeButton" Padding="5" Click="makeButton_Click"/>
                 <Button Content="Удалить" x:Name="deleteButton" Padding="5"/>
             </StackPanel>
         </StackPanel>
