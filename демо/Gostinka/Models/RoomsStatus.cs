@@ -11,7 +11,7 @@ public partial class RoomsStatus
 
     public int StatusId { get; set; }
 
-    public int? StatusDate { get; set; }
+    public DateOnly? StatusDate { get; set; }
 
     public virtual Room Room { get; set; } = null!;
 

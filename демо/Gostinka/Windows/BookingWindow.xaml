@@ -46,6 +46,12 @@
             <Setter Property="Padding" Value="5" />
             <Setter Property="Margin" Value="5" />
         </Style>
+        <Style x:Key="button" TargetType="Button">
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontFamily" Value="arial" />
+        </Style>
     </Window.Resources>
     <Grid ShowGridLines="True">
         <Grid.ColumnDefinitions>
@@ -73,7 +79,18 @@
                 </GroupBox>
                 <GroupBox Header="Выберите комнату" Style="{StaticResource group}">
                     <StackPanel Orientation="Vertical">
-                        <ComboBox x:Name="roomComboBox" Style="{StaticResource fieldCombo}"/>
+                        <ComboBox x:Name="roomComboBox" Style="{StaticResource fieldCombo}" SelectionChanged="roomComboBox_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding RoomNumber}" Margin="5" FontSize="20"/>
+                                        <TextBlock Text="{Binding Category.PricePerDayWithValue}" Margin="5" FontSize="20"
+                                                   Foreground="Green"/>
+                                        <TextBlock Text="{Binding Status.StatusName}"
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                         <GroupBox Header="Категория" Style="{StaticResource group}">
                             <TextBlock x:Name="roomCategory" Style="{StaticResource label}"/>
                         </GroupBox>
@@ -106,5 +123,9 @@
                 </GroupBox>
             </StackPanel>
         </ScrollViewer>
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="confirmButton" Content="Подтвердить" Style="{StaticResource button}" Click="confirmButton_Click"/>  
+            <Button x:Name="cancelButton" Content="Отменить" Style="{StaticResource button}"/>  
+        </StackPanel>
     </Grid>
 </Window>

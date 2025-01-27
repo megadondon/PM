@@ -14,4 +14,12 @@ public partial class Category
     public string? Description { get; set; }
 
     public virtual ICollection<Room> Rooms { get; set; } = new List<Room>();
+    
+    public string PricePerDayWithValue
+    {
+        get
+        {
+            return this.PricePerDay + " рублей";
+        }
+    }
 }
