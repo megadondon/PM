@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gostinka.Windows"
         mc:Ignorable="d"
-        Title="BookingWindow" Height="450" Width="800">
+        Title="BookingWindow" MinHeight="500" MinWidth="550"
+        >
     <Window.Resources>
         <Style x:Key="fieldDate" TargetType="DatePicker">
             <Setter Property="FontSize" Value="14" />
@@ -65,7 +66,7 @@
             <RowDefinition Height="0.2*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="1" VerticalAlignment="Top">
+        <StackPanel Grid.Column="1" VerticalAlignment="Center">
             <TextBlock Text="Бронивароние" FontSize="25" Margin="10" FontFamily="Arial" HorizontalAlignment="Center"/>
         </StackPanel>
         <ScrollViewer Grid.Row="1" Grid.Column="1">
@@ -82,11 +83,19 @@
                         <ComboBox x:Name="roomComboBox" Style="{StaticResource fieldCombo}" SelectionChanged="roomComboBox_SelectionChanged">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding RoomNumber}" Margin="5" FontSize="20"/>
-                                        <TextBlock Text="{Binding Category.PricePerDayWithValue}" Margin="5" FontSize="20"
-                                                   Foreground="Green"/>
-                                        <TextBlock Text="{Binding Status.StatusName}"
+                                    <StackPanel Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Номер комнаты:" Margin="0,5" FontSize="15"/>
+                                            <TextBlock Text="{Binding RoomNumber}" Margin="0,5" FontSize="15"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Стоимость:" Margin="0,5" FontSize="15"/>
+                                            <TextBlock Text="{Binding Category.PricePerDayWithValue}" Margin="0,5" FontSize="15" Foreground="Green"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Статус:" Margin="0,5" FontSize="15"/>
+                                            <TextBlock Text="{Binding RoomsStatuses.Status.StatusName}" Margin="0,5" FontSize="15"/>
+                                        </StackPanel>
                                     </StackPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
@@ -108,7 +117,7 @@
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="Выберите дополнительные услуги" Style="{StaticResource group}">
-                    <ListBox Grid.Column="0">
+                    <ListBox x:Name="listService" Grid.Column="0">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
@@ -124,8 +133,9 @@
             </StackPanel>
         </ScrollViewer>
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button x:Name="confirmButton" Content="Подтвердить" Style="{StaticResource button}" Click="confirmButton_Click"/>  
-            <Button x:Name="cancelButton" Content="Отменить" Style="{StaticResource button}"/>  
+            <Button x:Name="confirmButton" Content="Подтвердить" Style="{StaticResource button}" Click="confirmButton_Click"/>
+            <Button x:Name="cancelButton" Content="Отменить" Style="{StaticResource button}" Click="cancelButton_Click"/>
         </StackPanel>
     </Grid>
 </Window>
+    
