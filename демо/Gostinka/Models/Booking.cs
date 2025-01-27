@@ -17,6 +17,8 @@ public partial class Booking
 
     public decimal? Amount { get; set; }
 
+    public virtual ICollection<BookingsService> BookingsServices { get; set; } = new List<BookingsService>();
+
     public virtual User? Client { get; set; }
 
     public virtual Room? Room { get; set; }

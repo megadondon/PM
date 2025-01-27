@@ -9,5 +9,5 @@ public partial class Status
 
     public string? StatusName { get; set; }
 
-    public virtual ICollection<Room> Rooms { get; set; } = new List<Room>();
+    public virtual ICollection<RoomsStatus> RoomsStatuses { get; set; } = new List<RoomsStatus>();
 }

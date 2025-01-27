@@ -14,4 +14,6 @@ public partial class Service
     public decimal? Price { get; set; }
 
     public bool? InHour { get; set; }
+
+    public virtual ICollection<BookingsService> BookingsServices { get; set; } = new List<BookingsService>();
 }

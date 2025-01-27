@@ -13,11 +13,9 @@ public partial class Room
 
     public int? Floor { get; set; }
 
-    public int? StatusId { get; set; }
-
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
     public virtual Category? Category { get; set; }
 
-    public virtual Status? Status { get; set; }
+    public virtual ICollection<RoomsStatus> RoomsStatuses { get; set; } = new List<RoomsStatus>();
 }

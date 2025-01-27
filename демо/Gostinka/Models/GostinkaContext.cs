@@ -23,9 +23,9 @@ public partial class GostinkaContext : DbContext
 
     public virtual DbSet<CleaningSchedule> CleaningSchedules { get; set; }
 
-    public virtual DbSet<Passport> Passports { get; set; }
-
     public virtual DbSet<Room> Rooms { get; set; }
+
+    public virtual DbSet<RoomsStatus> RoomsStatuses { get; set; }
 
     public virtual DbSet<Service> Services { get; set; }
 
@@ -35,7 +35,7 @@ public partial class GostinkaContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySql("server=localhost;user=root;password=1234;database=gostinka", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.32-mysql"));
+        => optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=1234;database=gostinka", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.32-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -66,19 +66,19 @@ public partial class GostinkaContext : DbContext
 
         modelBuilder.Entity<BookingsService>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("bookings_services");
+            entity.HasKey(e => e.IdBookingService).HasName("PRIMARY");
 
-            entity.HasIndex(e => e.BookingId, "BookingId");
+            entity.ToTable("bookings_services");
 
-            entity.HasIndex(e => e.ServiceId, "ServiceId");
+            entity.HasIndex(e => e.ServiceId, "bookings_services_ibfk_1");
 
-            entity.HasOne(d => d.Booking).WithMany()
+            entity.HasIndex(e => e.BookingId, "bookings_services_ibfk_2");
+
+            entity.HasOne(d => d.Booking).WithMany(p => p.BookingsServices)
                 .HasForeignKey(d => d.BookingId)
                 .HasConstraintName("bookings_services_ibfk_2");
 
-            entity.HasOne(d => d.Service).WithMany()
+            entity.HasOne(d => d.Service).WithMany(p => p.BookingsServices)
                 .HasForeignKey(d => d.ServiceId)
                 .HasConstraintName("bookings_services_ibfk_1");
         });
@@ -107,18 +107,6 @@ public partial class GostinkaContext : DbContext
                 .HasConstraintName("cleaning_schedule_ibfk_1");
         });
 
-        modelBuilder.Entity<Passport>(entity =>
-        {
-            entity.HasKey(e => e.IdPassport).HasName("PRIMARY");
-
-            entity.ToTable("passports");
-
-            entity.Property(e => e.Address).HasMaxLength(100);
-            entity.Property(e => e.Number).HasMaxLength(6);
-            entity.Property(e => e.Serial).HasMaxLength(4);
-            entity.Property(e => e.WhoIssue).HasMaxLength(100);
-        });
-
         modelBuilder.Entity<Room>(entity =>
         {
             entity.HasKey(e => e.IdRoom).HasName("PRIMARY");
@@ -127,15 +115,30 @@ public partial class GostinkaContext : DbContext
 
             entity.HasIndex(e => e.CategoryId, "CategoryId");
 
-            entity.HasIndex(e => e.StatusId, "StatusId");
-
             entity.HasOne(d => d.Category).WithMany(p => p.Rooms)
                 .HasForeignKey(d => d.CategoryId)
                 .HasConstraintName("rooms_ibfk_1");
+        });
 
-            entity.HasOne(d => d.Status).WithMany(p => p.Rooms)
+        modelBuilder.Entity<RoomsStatus>(entity =>
+        {
+            entity.HasKey(e => e.IdRoomStatus).HasName("PRIMARY");
+
+            entity.ToTable("rooms_statuses");
+
+            entity.HasIndex(e => e.RoomId, "RoomFK_idx");
+
+            entity.HasIndex(e => e.StatusId, "StatusFK_idx");
+
+            entity.HasOne(d => d.Room).WithMany(p => p.RoomsStatuses)
+                .HasForeignKey(d => d.RoomId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("RoomFK");
+
+            entity.HasOne(d => d.Status).WithMany(p => p.RoomsStatuses)
                 .HasForeignKey(d => d.StatusId)
-                .HasConstraintName("rooms_ibfk_2");
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("StatusFK");
         });
 
         modelBuilder.Entity<Service>(entity =>
@@ -164,20 +167,10 @@ public partial class GostinkaContext : DbContext
 
             entity.ToTable("users");
 
-            entity.HasIndex(e => e.PassportId, "PassportId");
-
-            entity.Property(e => e.Email).HasMaxLength(256);
             entity.Property(e => e.Firstname).HasMaxLength(50);
             entity.Property(e => e.Lastname).HasMaxLength(50);
-            entity.Property(e => e.Password).HasMaxLength(50);
             entity.Property(e => e.Patronymic).HasMaxLength(50);
-            entity.Property(e => e.Phone).HasMaxLength(15);
             entity.Property(e => e.Role).HasColumnType("enum('Руководитель','Администратор','Клиент','Сотрудник','Гость')");
-            entity.Property(e => e.Username).HasMaxLength(50);
-
-            entity.HasOne(d => d.Passport).WithMany(p => p.Users)
-                .HasForeignKey(d => d.PassportId)
-                .HasConstraintName("users_ibfk_1");
         });
 
         OnModelCreatingPartial(modelBuilder);

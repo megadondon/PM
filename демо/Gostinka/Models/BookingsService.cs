@@ -9,6 +9,10 @@ public partial class BookingsService
 
     public int? BookingId { get; set; }
 
+    public int IdBookingService { get; set; }
+
+    public int? CountHour { get; set; }
+
     public virtual Booking? Booking { get; set; }
 
     public virtual Service? Service { get; set; }
