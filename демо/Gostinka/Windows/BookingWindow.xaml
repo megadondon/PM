@@ -80,29 +80,29 @@
                 </GroupBox>
                 <GroupBox Header="Выберите комнату" Style="{StaticResource group}">
                     <StackPanel Orientation="Vertical">
-                        <ComboBox x:Name="roomComboBox" Style="{StaticResource fieldCombo}" SelectionChanged="roomComboBox_SelectionChanged">
+                        <TextBlock Text="Категория" Style="{StaticResource label}"/>
+                        <ComboBox x:Name="categoryComboBox" Style="{StaticResource fieldCombo}" SelectionChanged="categoryComboBox_SelectionChanged">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Vertical">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Номер комнаты:" Margin="0,5" FontSize="15"/>
-                                            <TextBlock Text="{Binding RoomNumber}" Margin="0,5" FontSize="15"/>
+                                            <TextBlock Text="{Binding CategoryName}" Margin="0,5" FontSize="15"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Стоимость:" Margin="0,5" FontSize="15"/>
-                                            <TextBlock Text="{Binding Category.PricePerDayWithValue}" Margin="0,5" FontSize="15" Foreground="Green"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Статус:" Margin="0,5" FontSize="15"/>
-                                            <TextBlock Text="{Binding RoomsStatuses.Status.StatusName}" Margin="0,5" FontSize="15"/>
+                                            <TextBlock Text="{Binding PricePerDayWithValue}" Margin="0,5" FontSize="15" Foreground="Green"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <GroupBox Header="Категория" Style="{StaticResource group}">
-                            <TextBlock x:Name="roomCategory" Style="{StaticResource label}"/>
-                        </GroupBox>
+                        <TextBlock Text="Номер комнаты" Style="{StaticResource label}"/>
+                        <ComboBox x:Name="roomComboBox" Style="{StaticResource fieldCombo}" SelectionChanged="roomComboBox_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding RoomNumber}" Margin="0,5" FontSize="15"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                         <GroupBox Header="Описание" Style="{StaticResource group}">
                             <TextBlock x:Name="roomDesctiption" Style="{StaticResource label}"/>
                         </GroupBox>

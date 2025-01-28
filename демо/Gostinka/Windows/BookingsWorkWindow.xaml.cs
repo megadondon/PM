@@ -51,7 +51,8 @@ namespace Gostinka.Windows
                     }
                 }
 
-                if (filteredBookingList.Count > 0) {
+                if (filteredBookingList.Count > 0)
+                {
                     MessageBox.Show($"Найдено {filteredBookingList.Count} совпадений", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
                     bookingsList.ItemsSource = filteredBookingList;
                 }
