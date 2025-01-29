@@ -26,6 +26,7 @@ namespace Gostinka.Windows
         GostinkaContext context;
         List<Room> selectedRooms;
         List<Room> rooms;
+        decimal? totalAmount;
 
         public BookingWindow()
         {
@@ -46,11 +47,9 @@ namespace Gostinka.Windows
                 {
                     int id_room = (roomComboBox.SelectedItem as Room).IdRoom;
                     int client_id;
-                    decimal? price = (roomComboBox.SelectedItem as Room).Category.PricePerDay;
-                    decimal? amount;
                     DateOnly start = new DateOnly(startDate.SelectedDate.Value.Year, startDate.SelectedDate.Value.Month, startDate.SelectedDate.Value.Day);
                     DateOnly end = new DateOnly(endDate.SelectedDate.Value.Year, endDate.SelectedDate.Value.Month, endDate.SelectedDate.Value.Day);
-
+                    
                     User guest = new User()
                     {
                         Firstname = firstnameTextBox.Text,
@@ -80,15 +79,13 @@ namespace Gostinka.Windows
                         client_id = user.IdUser;
                     }
 
-                    amount = price * (end.DayOfYear - start.DayOfYear);
-
                     Booking booking = new Booking()
                     {
                         RoomId = id_room,
                         ClientId = client_id,
                         ArrivalDate = start,
                         DepartureDate = end,
-                        Amount = amount
+                        Amount = totalAmount
                     };
 
                     // замена статуса на занят
@@ -113,15 +110,6 @@ namespace Gostinka.Windows
             }
         }
 
-        private void roomComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (roomComboBox.SelectedItem != null)
-            {
-                Room room = roomComboBox.SelectedItem as Room;
-                roomDesctiption.Text = room.Category.Description;
-            }
-        }
-
         private void cancelButton_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Вы уверены, что хотите отменить бронирование?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
@@ -136,6 +124,28 @@ namespace Gostinka.Windows
 
             selectedRooms = rooms.Where(p => p.Category.CategoryName == category.CategoryName).ToList();
             roomComboBox.ItemsSource = selectedRooms;
+            roomDesctiption.Text = category.Description;
+        }
+
+        private void endDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (startDate != null && endDate != null && roomComboBox.SelectedItem != null && categoryComboBox != null)
+            {
+                DateTime? start = startDate.SelectedDate;
+                DateTime? end = endDate.SelectedDate;
+                decimal? price = (categoryComboBox.SelectedItem as Category).PricePerDay;
+
+                if (start < end)
+                {
+                    totalAmount = price * (end.Value.DayOfYear - start.Value.DayOfYear);
+                    totalText.Text = $"Итого: {totalAmount} руб.";
+                }
+                else
+                {
+                    MessageBox.Show("Дата начала периода бронирования больше, чем конец периода бронирования. Укажите другое значение.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    endDate.SelectedDate = startDate.SelectedDate.Value.AddDays(1);
+                }
+            }
         }
     }
 }

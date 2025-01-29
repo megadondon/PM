@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gostinka.Windows"
         mc:Ignorable="d"
-        Title="BookingWindow" MinHeight="500" MinWidth="550"
+        Title="BookingWindow"
+        Height="800" Width="700"
+        MinHeight="500" MinWidth="550"
         >
     <Window.Resources>
         <Style x:Key="fieldDate" TargetType="DatePicker">
@@ -48,13 +50,14 @@
             <Setter Property="Margin" Value="5" />
         </Style>
         <Style x:Key="button" TargetType="Button">
-            <Setter Property="Margin" Value="10" />
-            <Setter Property="Padding" Value="10" />
-            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="FontSize" Value="18" />
             <Setter Property="FontFamily" Value="arial" />
         </Style>
     </Window.Resources>
-    <Grid ShowGridLines="True">
+    <Grid ShowGridLines="False">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.2*" />
             <ColumnDefinition Width="1*" />
@@ -69,7 +72,7 @@
         <StackPanel Grid.Column="1" VerticalAlignment="Center">
             <TextBlock Text="Бронивароние" FontSize="25" Margin="10" FontFamily="Arial" HorizontalAlignment="Center"/>
         </StackPanel>
-        <ScrollViewer Grid.Row="1" Grid.Column="1">
+        <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Auto">
             <StackPanel Grid.Row="1" Grid.Column="1">
                 <GroupBox Header="Введите данные клиента" Style="{StaticResource group}">
                     <StackPanel Orientation="Vertical">
@@ -96,7 +99,7 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                         <TextBlock Text="Номер комнаты" Style="{StaticResource label}"/>
-                        <ComboBox x:Name="roomComboBox" Style="{StaticResource fieldCombo}" SelectionChanged="roomComboBox_SelectionChanged">
+                        <ComboBox x:Name="roomComboBox" Style="{StaticResource fieldCombo}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding RoomNumber}" Margin="0,5" FontSize="15"/>
@@ -104,7 +107,7 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                         <GroupBox Header="Описание" Style="{StaticResource group}">
-                            <TextBlock x:Name="roomDesctiption" Style="{StaticResource label}"/>
+                            <TextBlock x:Name="roomDesctiption" Style="{StaticResource label}" TextWrapping="Wrap"/>
                         </GroupBox>
                     </StackPanel>
                 </GroupBox>
@@ -113,10 +116,10 @@
                         <TextBlock Text="Период с" Style="{StaticResource label}"/>
                         <DatePicker x:Name="startDate" Style="{StaticResource fieldDate}"/>
                         <TextBlock Text="по" Style="{StaticResource label}"/>
-                        <DatePicker x:Name="endDate" Style="{StaticResource fieldDate}"/>
+                        <DatePicker x:Name="endDate" Style="{StaticResource fieldDate}" SelectedDateChanged="endDate_SelectedDateChanged"/>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="Выберите дополнительные услуги" Style="{StaticResource group}">
+                <!--<GroupBox Header="Выберите дополнительные услуги" Style="{StaticResource group}">
                     <ListBox x:Name="listService" Grid.Column="0">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
@@ -129,13 +132,20 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                </GroupBox>
+                </GroupBox>-->
             </StackPanel>
         </ScrollViewer>
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button x:Name="confirmButton" Content="Подтвердить" Style="{StaticResource button}" Click="confirmButton_Click"/>
-            <Button x:Name="cancelButton" Content="Отменить" Style="{StaticResource button}" Click="cancelButton_Click"/>
-        </StackPanel>
+        <Grid Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" ShowGridLines="False">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="totalText" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="50,0" FontSize="25"/>
+            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Stretch">
+                <Button x:Name="confirmButton" Content="Подтвердить" Style="{StaticResource button}" Click="confirmButton_Click"/>
+                <Button x:Name="cancelButton" Content="Отменить" Style="{StaticResource button}" Click="cancelButton_Click"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
     
