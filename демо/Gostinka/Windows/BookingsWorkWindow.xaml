@@ -29,7 +29,7 @@
         <StackPanel Grid.Row="1" Grid.Column="1">
             <StackPanel Orientation="Horizontal">
                 <Button Content="Создать" x:Name="makeButton" Padding="5" Click="makeButton_Click"/>
-                <Button Content="Удалить" x:Name="deleteButton" Padding="5"/>
+                <Button Content="Удалить" x:Name="deleteButton" Padding="5" Click="deleteButton_Click"/>
             </StackPanel>
         </StackPanel>
         <ListView x:Name="bookingsList" Grid.Row="2" Grid.Column="1">
@@ -37,7 +37,9 @@
                 <GridView>
                     <GridView.Columns>
                         <GridViewColumn DisplayMemberBinding="{Binding IdBooking}" Header="Номер бронирования"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding ArrivalDate}" Header="Дата заезда"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Room.RoomNumber}" Header="Номер комнаты"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding ArrivalDate, StringFormat='dd.MM.yyyy'}" Header="Дата заезда" Width="80"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding DepartureDate, StringFormat='dd.MM.yyyy'}" Header="Дата выезда" Width="80"/>
                         <GridViewColumn DisplayMemberBinding="{Binding Room.Category.CategoryName}" Header="Категория размещения"/>
                     </GridView.Columns>
                 </GridView>

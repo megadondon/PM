@@ -23,6 +23,7 @@ namespace Gostinka.Windows
                 .Include(r => r.Room)
                 .ThenInclude(c => c.Category)
                 .AsNoTracking()
+                .OrderByDescending(o => o.ArrivalDate)
                 .ToList();
 
             if (bookings.Count > 0)
@@ -78,12 +79,37 @@ namespace Gostinka.Windows
 
         private void showAllButton_Click(object sender, RoutedEventArgs e)
         {
-            bookingsList.ItemsSource = bookings;
+            bookingsList.ItemsSource = context.Bookings
+                .Include(r => r.Room)
+                .ThenInclude(c => c.Category)
+                .AsNoTracking()
+                .OrderByDescending(o => o.ArrivalDate)
+                .ToList();
         }
 
         private void makeButton_Click(object sender, RoutedEventArgs e)
         {
             new BookingWindow().Show();
+        }
+
+        private void deleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (bookingsList.SelectedItem != null)
+            {
+                Booking booking = bookingsList.SelectedItem as Booking;
+
+                if (MessageBox.Show("Вы уверены, что хотите отменить бронирование?\n\n" +
+                    $"Номер брони: {booking.IdBooking}\n" +
+                    $"Номер комнаты: {booking.Room.RoomNumber}\n" +
+                    $"Категория: {booking.Room.Category.CategoryName}", "Подтверждение отмены", MessageBoxButton.YesNo, MessageBoxImage.Information)
+                    == MessageBoxResult.Yes)
+                {
+                    context.Bookings.Remove(booking);
+                    context.SaveChanges();
+
+                    MessageBox.Show("Бронь была отменена", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
         }
     }
 }
